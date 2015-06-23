@@ -1,0 +1,57 @@
+package config;
+
+import java.util.ResourceBundle;
+
+public final class Config {
+
+	private static final Config instance = new Config();
+
+	private final ResourceBundle rb = ResourceBundle.getBundle(this.getClass().getName().toLowerCase());
+
+	private Config() {
+	}
+
+	public static final Config getInstance() {
+		return instance;
+	}
+
+	// //////////////////////////////////////////////////////////////////////////
+	private String getString(final String nome) {
+		return rb.getString(nome);
+	}
+
+	private int getInt(final String nome) {
+		return Integer.parseInt(getString(nome));
+	}
+
+	private long getLong(final String nome) {
+		return Long.parseLong(getString(nome));
+	}
+
+	// //////////////////////////////////////////////////////////////////////////
+
+	public final String getValue1() {
+		return getString("VALUE_1");
+	}
+
+	public final String getValue2() {
+		return getString("VALUE_2");
+	}
+
+	public final String getValue3() {
+		return getString("VALUE_3");
+	}
+
+	public final long getCodLoremIpsum() {
+		return getLong("COD_LOREM_IPSUM");
+	}
+
+	public final int getIntervalXyz() {
+		return getInt("INTERVAL_XYZ");
+	}
+
+	public final long getCod1() {
+		return getLong("COD_1");
+	}
+
+}
