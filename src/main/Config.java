@@ -4,6 +4,9 @@ import java.util.ResourceBundle;
 
 public final class Config {
 
+	private static final String LIST_SEPARATOR = "\\s*,\\s";
+	private static final int BASE_10 = 10;
+
 	private static final Config instance = new Config();
 
 	private final ResourceBundle rb = ResourceBundle.getBundle(this.getClass().getName().toLowerCase());
@@ -20,13 +23,62 @@ public final class Config {
 		return rb.getString(nome);
 	}
 
+	private int parseInt(final String value) {
+		return Integer.parseInt(value, BASE_10);
+	}
+
+	private long parseLong(final String value) {
+		return Long.parseLong(value, BASE_10);
+	}
+
 	private int getInt(final String nome) {
-		return Integer.parseInt(getString(nome));
+		return parseInt(getString(nome));
 	}
 
 	private long getLong(final String nome) {
-		return Long.parseLong(getString(nome));
+		return parseLong(getString(nome));
 	}
+
+	private String[] getStringArray(final String nome) {
+		return parseStringArray(getString(nome));
+	}
+
+	private String[] parseStringArray(final String value) {
+		return value == null ? new String[0] : value.split(LIST_SEPARATOR);
+	}
+
+	private long[] getLongArray(final String nome) {
+		return parseLongArray(getStringArray(nome));
+	}
+
+	private long[] parseLongArray(final String[] stringArray) {
+		if (stringArray == null) {
+			return null;
+		} else {
+			long[] longArray = new long[stringArray.length];
+			for (int i = 0; i < stringArray.length; i++) {
+				longArray[i] = parseLong(stringArray[i]);
+			}
+			return longArray;
+		}
+	}
+
+	private long[] getIntArray(final String nome) {
+		return parseIntArray(getStringArray(nome));
+	}
+
+	private long[] parseIntArray(final String[] stringArray) {
+		if (stringArray == null) {
+			return null;
+		} else {
+			long[] intArray = new long[stringArray.length];
+			for (int i = 0; i < stringArray.length; i++) {
+				intArray[i] = parseInt(stringArray[i]);
+			}
+			return intArray;
+		}
+	}
+
 	// //////////////////////////////////////////////////////////////////////////
 
 	/*
